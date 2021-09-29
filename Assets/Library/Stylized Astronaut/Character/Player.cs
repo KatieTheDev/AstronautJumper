@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-
+    private GameManager gameManager;
     private Animator anim;
     private CharacterController controller;
 
@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         controller = GetComponent<CharacterController>();
         anim = gameObject.GetComponentInChildren<Animator>();
     }
