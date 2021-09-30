@@ -16,6 +16,10 @@ public class TurretFire : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.left * speed * Time.deltaTime);
+        if (!gameManager.isAlive)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +31,7 @@ public class TurretFire : MonoBehaviour
         else if (other.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
-            Destroy(other.gameObject);
+            gameManager.RemoveLife();
         }
     }
 }

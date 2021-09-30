@@ -21,12 +21,19 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (gameManager.teleportPos != Vector3.zero)
+        {
+            controller.enabled = false;
+            transform.position = gameManager.teleportPos;
+            controller.enabled = true;
+            gameManager.teleportPos = Vector3.zero;
+        }
+        if (Input.GetKey(KeyCode.D) && gameManager.gameStarted && gameManager.isAlive)
         {
             anim.SetInteger("AnimationPar", 1);
             moveDirection.x = speed;
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) && gameManager.gameStarted && gameManager.isAlive)
         {
             anim.SetInteger("AnimationPar", 1);
             moveDirection.x = -speed;
@@ -37,7 +44,7 @@ public class Player : MonoBehaviour
             moveDirection.x = 0;
         }
 
-        if (controller.isGrounded && Input.GetKey(KeyCode.Space))
+        if (controller.isGrounded && Input.GetKey(KeyCode.Space) && gameManager.gameStarted && gameManager.isAlive)
         {
             moveDirection.y = speed * 2;
         }
