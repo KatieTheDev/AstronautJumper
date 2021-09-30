@@ -1360,6 +1360,7 @@ Transform:
   - {fileID: 605470740}
   - {fileID: 1342000276}
   - {fileID: 1566216975}
+  - {fileID: 1958893371}
   m_Father: {fileID: 564338652}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2538,12 +2539,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.19830468, y: 0.16103783, z: 0.14714529}
   m_Center: {x: -0.0004090786, y: 0.1492374, z: -0.021167632}
---- !u!143 &1449221204 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 143350241100547368, guid: 2abf19653d633114faedf3b60dc6c39f,
-    type: 3}
-  m_PrefabInstance: {fileID: 649615274}
-  m_PrefabAsset: {fileID: 0}
 --- !u!54 &1449221207
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3370,6 +3365,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1958893370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1958893371}
+  m_Layer: 0
+  m_Name: CameraPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1958893371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958893370}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -37.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 497097297}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2033758053
 GameObject:
   m_ObjectHideFlags: 0
@@ -3406,12 +3431,12 @@ MonoBehaviour:
   score: 0
   enemyAmmoPrefab: {fileID: 4040223085108628560, guid: 85d19e24222a41b49a82a94d6c2d3b42,
     type: 3}
+  teleportPos: {x: 0, y: 0, z: 0}
   playerObject: {fileID: 1449221201}
   cameraObject: {fileID: 963194225}
   scoreDisplay: {fileID: 431780458}
   livesDisplay: {fileID: 1770364192}
   levelDisplay: {fileID: 323967429}
-  characterController: {fileID: 1449221204}
 --- !u!4 &2033758055
 Transform:
   m_ObjectHideFlags: 0

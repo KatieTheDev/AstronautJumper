@@ -21,6 +21,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (gameManager.teleportPos != Vector3.zero)
+        {
+            controller.enabled = false;
+            transform.position = gameManager.teleportPos;
+            controller.enabled = true;
+            gameManager.teleportPos = Vector3.zero;
+        }
         if (Input.GetKey(KeyCode.D) && gameManager.gameStarted && gameManager.isAlive)
         {
             anim.SetInteger("AnimationPar", 1);
@@ -48,10 +55,5 @@ public class Player : MonoBehaviour
         transform.Rotate(0, turn * turnSpeed * Time.deltaTime, 0);*/
         controller.Move(moveDirection * Time.deltaTime);
         moveDirection.y -= gravity * Time.deltaTime;
-    }
-
-    public void ChangePos(Vector3 newPos)
-    {
-        transform.position = newPos;
     }
 }

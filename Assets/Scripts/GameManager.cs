@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
         new Vector3 (-49.1f, -10.27283f, 13.53122f),
         new Vector3 (0, 1, -37.2f)
     };
+    public Vector3 teleportPos = Vector3.zero;
 
     // Used to change location of player on level change
     public GameObject playerObject;
@@ -46,12 +47,13 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI levelDisplay;
 
     // CharacterController
-    public CharacterController characterController;
+    private CharacterController controller;
 
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("TimedScore", 0.25f, 0.25f); // Add 1 to score about every 1/4th of a second
+        controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
     public void RemoveLife()
     {
         lives--;
-        playerObject.transform.position = spawnLocation[levelNumber];
+        teleportPos = spawnLocation[levelNumber];
         UpdateDisplays();
     }
 
