@@ -6,7 +6,6 @@ using System.Linq;
 public class SpawnManager : MonoBehaviour
 {
     private Transform spawnPos;
-    public GameObject ammoPrefab;
     private IList taggedPrefabs;
     private GameManager gameManager;
     // Start is called before the first frame update
@@ -14,19 +13,23 @@ public class SpawnManager : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawnPos = transform.Find("ShootPosition");
-        taggedPrefabs = Resources.FindObjectsOfTypeAll(typeof(GameObject)).Cast<GameObject>().Where(g => g.tag == "ShooterAmmo").ToList();
-        ammoPrefab = (GameObject)taggedPrefabs[0];
         InvokeRepeating("SpawnAmmo", 1, 3);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!gameManager.isAlive)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void SpawnAmmo()
     {
-        Instantiate(ammoPrefab, spawnPos.position, ammoPrefab.transform.rotation);
+        if (gameManager.isAlive)
+        {
+            Instantiate(gameManager.enemyAmmoPrefab, spawnPos.position, gameManager.enemyAmmoPrefab.transform.rotation);
+        }
     }
 }
