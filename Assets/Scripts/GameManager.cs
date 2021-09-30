@@ -6,7 +6,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     // Used to check if the game has started yet
-    public bool gameStarted = true;
+    public bool gameStarted = false;
 
     // Public player property variables
     public bool isAlive = true;
@@ -22,16 +22,31 @@ public class GameManager : MonoBehaviour
     // Index number is same as level number
     private Vector3[] spawnLocation = new Vector3[] {
         new Vector3 (0, 0, 0), // Placeholder to make index number the same as level number
-        new Vector3 (-13.73f, -5.96f, -10f) // Index 1, Level 1
+        new Vector3 (-13.73f, -5.5f, -10f) // Index 1, Level 1
     };
 
-    // Used to change location of player on game restart
+    // Camera positions for each level
+    // Spaced out with one Vector3 position per line for each level with the first being for the start of the game
+    // Index number is the same as level number
+    private Vector3[] cameraLocation = new Vector3[]
+    {
+        new Vector3 (-49.1f, -10.27283f, 13.53122f),
+        new Vector3 (0, 1, -37.2f)
+    };
+
+    // Used to change location of player on level change
     public GameObject playerObject;
+
+    // Used to change location of camera on level change
+    public GameObject cameraObject;
 
     // Text objects
     public TextMeshProUGUI scoreDisplay;
     public TextMeshProUGUI livesDisplay;
-    public TextMeshProUGUI levelNumberDisplay;
+    public TextMeshProUGUI levelDisplay;
+
+    // CharacterController
+    public CharacterController characterController;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +60,10 @@ public class GameManager : MonoBehaviour
         if (lives < 1)
         {
             isAlive = false;
+        }
+        if (gameStarted && isAlive)
+        {
+            UpdateDisplays();
         }
     }
 
@@ -71,5 +90,31 @@ public class GameManager : MonoBehaviour
     {
         lives--;
         playerObject.transform.position = spawnLocation[levelNumber];
+        UpdateDisplays();
+    }
+
+    public void ToggleDisplays(bool newState)
+    {
+        scoreDisplay.gameObject.SetActive(newState);
+        livesDisplay.gameObject.SetActive(newState);
+        levelDisplay.gameObject.SetActive(newState);
+    }
+
+    public void StartGame()
+    {
+        ToggleDisplays(false);
+        cameraObject.transform.position = cameraLocation[0];
+        // Enable level start
+        cameraObject.transform.position = cameraLocation[1];
+        //characterController.ChangePos(spawnLocation[1];
+        gameStarted = true;
+        levelNumber = 1;
+    }
+
+    public void UpdateDisplays()
+    {
+        scoreDisplay.text = "Score: " + score;
+        livesDisplay.text = "Lives: " + lives;
+        levelDisplay.text = "Level " + levelNumber;
     }
 }
