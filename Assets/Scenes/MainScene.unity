@@ -1162,7 +1162,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1147752367711628, guid: 2abf19653d633114faedf3b60dc6c39f, type: 3}
       propertyPath: m_Name
-      value: Stylized Astronaut
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1147752367711628, guid: 2abf19653d633114faedf3b60dc6c39f, type: 3}
       propertyPath: m_TagString
@@ -2178,6 +2178,7 @@ MonoBehaviour:
   score: 0
   enemyAmmoPrefab: {fileID: 4040223085108628560, guid: 85d19e24222a41b49a82a94d6c2d3b42,
     type: 3}
+  playerObject: {fileID: 1449221201}
 --- !u!4 &2033758055
 Transform:
   m_ObjectHideFlags: 0
