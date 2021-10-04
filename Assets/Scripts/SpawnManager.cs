@@ -7,6 +7,7 @@ public class SpawnManager : MonoBehaviour
 {
     private Transform spawnPos;
     private GameManager gameManager;
+    public int shooterLevel;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +24,18 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnAmmo()
     {
-        if (gameManager.isAlive)
+        if (gameManager.isAlive && shooterLevel == gameManager.levelNumber)
         {
             Instantiate(gameManager.enemyAmmoPrefab, spawnPos.position, gameManager.enemyAmmoPrefab.transform.rotation);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+            gameManager.levelKilled++;
         }
     }
 }
