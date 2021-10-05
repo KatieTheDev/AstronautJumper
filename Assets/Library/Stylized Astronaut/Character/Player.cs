@@ -23,10 +23,23 @@ public class Player : MonoBehaviour
     {
         if (gameManager.teleportPos != Vector3.zero)
         {
-            controller.enabled = false;
-            transform.position = gameManager.teleportPos;
-            controller.enabled = true;
-            gameManager.teleportPos = Vector3.zero;
+            if (gameManager.debugMode)
+            {
+                controller.enabled = false;
+                Debug.Log("Disabled playercontroller");
+                transform.position = gameManager.teleportPos;
+                Debug.Log("Teleported player to " + transform.position);
+                controller.enabled = true;
+                Debug.Log("Enabled playercontroller");
+                gameManager.teleportPos = Vector3.zero;
+            }
+            else if (!gameManager.debugMode)
+            {
+                controller.enabled = false;
+                transform.position = gameManager.teleportPos;
+                controller.enabled = true;
+                gameManager.teleportPos = Vector3.zero;
+            }
         }
         if (Input.GetKey(KeyCode.D) && gameManager.gameStarted && gameManager.isAlive)
         {
