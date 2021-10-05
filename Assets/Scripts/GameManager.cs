@@ -46,10 +46,10 @@ public class GameManager : MonoBehaviour
     // Array for how many enemies are in each level
     private int[] levelEnemies = new int[]
     {
-        0,
-        1,
-        2,
-        3
+        0, // Placeholder to keep index right
+        1, // Enemies in level 1
+        2, // Enemies in level 2
+        5 // Enemies in level 3
     };
 
     public int enemiesToKill;
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
         cameraTransform.position = cameraLocation[0];
         teleportPos = spawnLocation[0];
         levelNumber = 0;
+        enemiesToKill = levelEnemies[0];
         ChangeLevel(0);
         StartGame();
         UpdateDisplays();
@@ -166,6 +167,7 @@ public class GameManager : MonoBehaviour
     {
         if (debugMode)
         {
+            enemiesToKill = levelEnemies[newLevel];
             levelNumber = newLevel;
             Debug.Log("Updated level number to " + levelNumber);
             levelKilled = 0;
@@ -179,6 +181,7 @@ public class GameManager : MonoBehaviour
         }
         else if (!debugMode)
         {
+            enemiesToKill = levelEnemies[newLevel];
             levelNumber = newLevel;
             levelKilled = 0;
             cameraTransform.position = cameraLocation[levelNumber];
