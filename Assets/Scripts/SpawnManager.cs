@@ -8,12 +8,17 @@ public class SpawnManager : MonoBehaviour
     private Transform spawnPos;
     private GameManager gameManager;
     public int shooterLevel;
+
+    private int under4EnemiesDelay = 3;
+    private int over4EnemiesDelay = 6;
+
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawnPos = transform.Find("ShootPosition");
-        InvokeRepeating("SpawnAmmo", 1, 3);
+        InvokeRepeating(nameof(SpawnAmmoOver4), 1, over4EnemiesDelay);
+        InvokeRepeating(nameof(SpawnAmmoUnder4), 1, under4EnemiesDelay);
     }
 
     // Update is called once per frame
@@ -22,9 +27,17 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    void SpawnAmmo()
+    void SpawnAmmoUnder4()
     {
-        if (gameManager.isAlive && shooterLevel == gameManager.levelNumber)
+        if (gameManager.enemiesToKill < 4 && gameManager.isAlive && shooterLevel == gameManager.levelNumber)
+        {
+            Instantiate(gameManager.enemyAmmoPrefab, spawnPos.position, gameManager.enemyAmmoPrefab.transform.rotation);
+        }
+    }
+
+    void SpawnAmmoOver4()
+    {
+        if (gameManager.enemiesToKill > 4 && gameManager.isAlive && shooterLevel == gameManager.levelNumber)
         {
             Instantiate(gameManager.enemyAmmoPrefab, spawnPos.position, gameManager.enemyAmmoPrefab.transform.rotation);
         }

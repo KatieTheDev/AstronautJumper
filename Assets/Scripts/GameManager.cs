@@ -5,6 +5,9 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    // Enable debug mode which has extra event logging
+    public bool debugMode = true;
+
     // Used to check if the game has started yet
     public bool gameStarted = false;
 
@@ -24,7 +27,8 @@ public class GameManager : MonoBehaviour
     private Vector3[] spawnLocation = new Vector3[] {
         new Vector3(0, 0, 0), // Placeholder to make index number the same as level number
         new Vector3(-13.73f, -5.5f, -10f), // Index 1, Level 1
-        new Vector3(52.97f, -5.5f, -10f)
+        new Vector3(52.97f, -5.5f, -10f), // Level 2
+        new Vector3(122.8f, -5.5f, -10f) // Level 3
     };
     public Vector3 teleportPos = Vector3.zero; // Used for teleportation
 
@@ -42,9 +46,10 @@ public class GameManager : MonoBehaviour
     // Array for how many enemies are in each level
     private int[] levelEnemies = new int[]
     {
-        0,
-        1,
-        2
+        0, // Placeholder to keep index right
+        1, // Enemies in level 1
+        2, // Enemies in level 2
+        5 // Enemies in level 3
     };
 
     public int enemiesToKill;
@@ -63,10 +68,19 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Reset all variables to bypass editor overrides
+        gameStarted = false;
+        isAlive = false;
+        lives = 3;
+        levelNumber = 0;
+        score = 0;
+        levelKilled = 0;
+
         InvokeRepeating("TimedScore", 0.25f, 0.25f); // Add 1 to score about every 1/4th of a second
         cameraTransform.position = cameraLocation[0];
         teleportPos = spawnLocation[0];
         levelNumber = 0;
+        enemiesToKill = levelEnemies[0];
         ChangeLevel(0);
         StartGame();
         UpdateDisplays();
@@ -151,10 +165,28 @@ public class GameManager : MonoBehaviour
 
     private void ChangeLevel(int newLevel)
     {
-        levelNumber = newLevel;
-        levelKilled = 0;
-        cameraTransform.position = cameraLocation[levelNumber];
-        teleportPos = spawnLocation[levelNumber];
-        UpdateDisplays();
+        if (debugMode)
+        {
+            enemiesToKill = levelEnemies[newLevel];
+            levelNumber = newLevel;
+            Debug.Log("Updated level number to " + levelNumber);
+            levelKilled = 0;
+            Debug.Log("Reset levelKilled to " + levelKilled);
+            cameraTransform.position = cameraLocation[levelNumber];
+            Debug.Log("Teleported camera to new level");
+            teleportPos = spawnLocation[levelNumber];
+            Debug.Log("Sent teleportation coordinates to Player");
+            UpdateDisplays();
+            Debug.Log("Displays updated");
+        }
+        else if (!debugMode)
+        {
+            enemiesToKill = levelEnemies[newLevel];
+            levelNumber = newLevel;
+            levelKilled = 0;
+            cameraTransform.position = cameraLocation[levelNumber];
+            teleportPos = spawnLocation[levelNumber];
+            UpdateDisplays();
+        }
     }
 }
