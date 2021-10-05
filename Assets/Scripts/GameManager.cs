@@ -28,7 +28,8 @@ public class GameManager : MonoBehaviour
         new Vector3(0, 0, 0), // Placeholder to make index number the same as level number
         new Vector3(-13.73f, -5.5f, -10f), // Index 1, Level 1
         new Vector3(52.97f, -5.5f, -10f), // Level 2
-        new Vector3(122.8f, -5.5f, -10f) // Level 3
+        new Vector3(122.8f, -5.5f, -10f), // Level 3
+        new Vector3(186.58f, -5.5f, -10f) // Level 4
     };
     public Vector3 teleportPos = Vector3.zero; // Used for teleportation
 
@@ -40,7 +41,8 @@ public class GameManager : MonoBehaviour
         new Vector3(-68.82258f, 1f, -37.2f), // Camera position for starting location with only a background
         new Vector3(0, 1, -37.2f), // Camera position for level 1
         new Vector3(66.17741f, 1, -37.2f), // Camera position for level 2
-        new Vector3(135.9774f, 1, -37.2f) // Camera position for level 3
+        new Vector3(135.9774f, 1, -37.2f), // Camera position for level 3
+        new Vector3(198.7774f, 1, -37.2f) // Camera position for level 4
     };
 
     // Array for how many enemies are in each level
