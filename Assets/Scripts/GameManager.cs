@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +19,9 @@ public class GameManager : MonoBehaviour
     public int levelNumber = 0;
     public int score = 0;
     public int levelKilled = 0;
+
+    // Used for pausing
+    public bool isPaused = false;
 
     // Object to allow TurretFire to use a prefab more easily
     public GameObject enemyAmmoPrefab;
@@ -51,7 +56,8 @@ public class GameManager : MonoBehaviour
         0, // Placeholder to keep index right
         1, // Enemies in level 1
         2, // Enemies in level 2
-        5 // Enemies in level 3
+        5, // Enemies in level 3
+        8 // Enemies in level 4
     };
 
     public int enemiesToKill;
@@ -66,6 +72,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreDisplay;
     public TextMeshProUGUI livesDisplay;
     public TextMeshProUGUI levelDisplay;
+    public GameObject startScreen;
+    public GameObject pauseScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -77,47 +85,46 @@ public class GameManager : MonoBehaviour
         levelNumber = 0;
         score = 0;
         levelKilled = 0;
-
-        InvokeRepeating("TimedScore", 0.25f, 0.25f); // Add 1 to score about every 1/4th of a second
         cameraTransform.position = cameraLocation[0];
         teleportPos = spawnLocation[0];
-        levelNumber = 0;
         enemiesToKill = levelEnemies[0];
-        ChangeLevel(0);
-        StartGame();
-        UpdateDisplays();
+        ToggleDisplays(false);
+
+        InvokeRepeating("TimedScore", 0.25f, 0.25f); // Add 1 to score about every 1/4th of a second
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!gameStarted)
-        {
-            StartGame();
-        }
-        else if (gameStarted)
+        if (gameStarted)
         {
             if (lives < 1)
             {
                 isAlive = false;
             }
-            if (gameStarted && isAlive)
+            if (isAlive)
             {
                 UpdateDisplays();
             }
 
-            if (levelKilled == levelEnemies[levelNumber] && isAlive && gameStarted)
+            if (levelKilled == levelEnemies[levelNumber] && isAlive)
             {
                 ChangeLevel(levelNumber + 1);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+
         UpdateDisplays();
     }
 
     // Method to increase score every set time from Start method
     private void TimedScore()
     {
-        if (isAlive)
+        if (isAlive && gameStarted)
         {
             score++;
         }
@@ -149,11 +156,15 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        ToggleDisplays(false);
-        ChangeLevel(0);
-        // Enable level start
+        // Start level 1
+        startScreen.gameObject.SetActive(false);
         ToggleDisplays(true);
-        ChangeLevel(1);
+        enemiesToKill = levelEnemies[1];
+        levelNumber = 1;
+        levelKilled = 0;
+        cameraTransform.position = cameraLocation[1];
+        teleportPos = spawnLocation[1];
+        UpdateDisplays();
         gameStarted = true;
         isAlive = true;
     }
@@ -190,5 +201,29 @@ public class GameManager : MonoBehaviour
             teleportPos = spawnLocation[levelNumber];
             UpdateDisplays();
         }
+    }
+
+    public void RestartLevel()
+    {
+        ChangeLevel(levelNumber);
+    }
+
+    public void TogglePause()
+    {
+        if (isPaused)
+        {
+            pauseScreen.gameObject.SetActive(false);
+            ToggleDisplays(true);
+        }
+        else
+        {
+            pauseScreen.gameObject.SetActive(true);
+            ToggleDisplays(false);
+        }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
