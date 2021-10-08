@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameStarted && !isPaused)
         {
+            enemiesToKill = levelEnemies[levelNumber];
             if (lives < 1)
             {
                 LoseGame();
@@ -120,11 +121,16 @@ public class GameManager : MonoBehaviour
                 UpdateDisplays();
             }
 
+            if (levelNumber == 2 && levelKilled > enemiesToKill)
+            {
+                levelKilled = levelEnemies[2];
+            }
+
             if (levelKilled == levelEnemies[levelNumber] && isAlive && levelNumber < totalLevels)
             {
                 ChangeLevel(levelNumber + 1);
             }
-            else if (levelKilled == levelEnemies[levelNumber] && isAlive && levelNumber == totalLevels)
+            else if (levelKilled == levelEnemies[levelNumber] && isAlive && levelNumber == totalLevels && bossKilled)
             {
                 WinGame();
             }
