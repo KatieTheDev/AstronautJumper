@@ -29,7 +29,7 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnAmmoUnder4()
     {
-        if (gameManager.enemiesToKill < 4 && gameManager.isAlive && shooterLevel == gameManager.levelNumber)
+        if (gameManager.enemiesToKill < 4 && gameManager.isAlive && shooterLevel == gameManager.levelNumber && !gameManager.isPaused)
         {
             Instantiate(gameManager.enemyAmmoPrefab, spawnPos.position, gameManager.enemyAmmoPrefab.transform.rotation);
         }
@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnAmmoOver4()
     {
-        if (gameManager.enemiesToKill > 4 && gameManager.isAlive && shooterLevel == gameManager.levelNumber)
+        if (gameManager.enemiesToKill > 4 && gameManager.isAlive && shooterLevel == gameManager.levelNumber && !gameManager.isPaused)
         {
             Instantiate(gameManager.enemyAmmoPrefab, spawnPos.position, gameManager.enemyAmmoPrefab.transform.rotation);
         }
